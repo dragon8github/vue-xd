@@ -173,6 +173,14 @@ const CommonApi_GetDocCountList = (data) => {
 }
 
 
+
+const CommonApi_GetArbitrationRecordReport = data => {
+    return ajax.postData('', {
+        "Data": data,
+        "MethodName": "CommonApi_GetArbitrationRecordReport"
+    });
+}
+
 export default {
     CommonApi_SaveBusinessBaseInfo,
     CommonApi_CancelBusiness,
@@ -184,5 +192,6 @@ export default {
     CommonApi_GetAfterLoan,
     CommonApi_GetRepayPlan,
     CommonApi_IsParagraph,
-    CommonApi_GetDocCountList
+    CommonApi_GetDocCountList,
+    CommonApi_GetArbitrationRecordReport
 }

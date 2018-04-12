@@ -1,5 +1,5 @@
 <template>
-	<div id="messageInfo">
+	<div id="messageInfo" v-if="myData">
 		 <cs-header :header-title="'消息中心'" :has-back="true"></cs-header> 
          <div class="header">
              <div class="header__title">2018年03月07日湛仲院立案上传报告</div>
@@ -32,7 +32,6 @@
 import csHeader from 'mycomponents/Header.vue'
 
 export default {
-
   name: 'messageInfo',
 	components: {
 	  csHeader
@@ -43,7 +42,10 @@ export default {
     };
   },
   beforeMount () {
-  	
+     const date = this.$route.params.id;
+  	 this.api.Common.CommonApi_GetArbitrationRecordReport(date).then(_=>{
+        this.myData = _.Data
+     })
   }
 };
 </script>
