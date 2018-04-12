@@ -5,31 +5,15 @@
              <div class="header__title">2018年03月07日湛仲院立案上传报告</div>
              <div class="header__timer">2018-03-07  08:00</div>
          </div>
-         
          <div class="ad">该报告由系统每天早上08:00自动生成，如有疑问请联系运维。</div>
-
          <div class="case">
-                <div class="case__cell is-active">
-                    <div class="case__title">立案数量</div>
-                    <div class="case__num">386</div>
-                </div>
-                <div class="case__cell">
-                    <div class="case__title">立案失败</div>
-                    <div class="case__num">32</div>
-                </div>
-                <div class="case__cell">
-                    <div class="case__title">立案成功</div>
-                    <div class="case__num">332</div>
-                </div>
-                <div class="case__cell">
-                    <div class="case__title">处理中</div>
-                    <div class="case__num">22</div>
-                </div>
+                <div class="case__cell is-active"><div class="case__title">立案数量</div> <div class="case__num">386</div></div>
+                <div class="case__cell"><div class="case__title">立案失败</div> <div class="case__num">32</div></div>
+                <div class="case__cell"><div class="case__title">立案成功</div> <div class="case__num">332</div></div>
+                <div class="case__cell"><div class="case__title">处理中</div> <div class="case__num">22</div></div>
          </div>
-
         <div class="center">
              <div class="casecount">立案总金额：<span class="casecount__money">350,000.00元</span></div>
-             
              <div class="item">
                 <div class="item__img is-fail"></div>
                 <div class="item__id">TDF8272017031701</div>
@@ -106,15 +90,11 @@ export default {
     }
 
         .case:before {
-            @include size(0px, 0px);
-            position: absolute;
+            @include triangle(bottom, 20px, #fff);
             content: "";
+            position: absolute;
             left: pxToRem(80px);
             bottom: pxToRem(-14px);
-
-            border-left: pxToRem(20px) solid transparent;
-            border-right: pxToRem(20px) solid transparent;
-            border-top: pxToRem(20px) solid #fff;
         }
 
         .case__cell {

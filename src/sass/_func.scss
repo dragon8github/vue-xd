@@ -200,3 +200,23 @@ $base-font-size: 75px; //design iphone6: 375px * 2 / 10 = 75px; --design
     }
 }
 
+@mixin triangle ($direction, $size, $color) {
+    @include size(0px, 0px);
+    @if $direction == left {
+        border-top: pxToRem($size) solid transparent;
+        border-bottom: pxToRem($size) solid transparent;
+        border-right: pxToRem($size) solid $color;
+    } @else if $direction == right {
+        border-top: pxToRem($size) solid transparent;
+        border-bottom: pxToRem($size) solid transparent;
+        border-left: pxToRem($size) solid $color;
+    } @else if $direction == top {
+        border-left: pxToRem($size) solid transparent;
+        border-right: pxToRem($size) solid transparent;
+        border-bottom: pxToRem($size) solid $color;
+    } @else if $direction == bottom {
+          border-left: pxToRem($size) solid transparent;
+          border-right: pxToRem($size) solid transparent;
+          border-top: pxToRem($size) solid $color;
+    }
+}

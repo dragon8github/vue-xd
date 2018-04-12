@@ -19,6 +19,7 @@ const NoticeDetails = r => require.ensure([], () => r(require('../views/Notice/n
 const Message = r => require.ensure([], () => r(require('../views/Message/message.vue')), 'Message')
 const MessageDetails = r => require.ensure([], () => r(require('../views/Message/messageDetails.vue')), 'MessageDetails')
 const MessageInfo = r => require.ensure([], () => r(require('../views/Message/MessageInfo.vue')), 'MessageInfo')
+const messageErr = r => require.ensure([], () => r(require('../views/Message/messageErr.vue')), 'messageErr')
 
 // 用户中心
 const User = r => require.ensure([], () => r(require('../views/User/Index.vue')), 'User')
@@ -119,6 +120,7 @@ const router = new Router({
         { path: '/message', name: 'Message', component: Message },
         { path: '/message/:id', name: 'MessageDetails', component: MessageDetails },
         { path: '/MessageInfo/:id', name: 'MessageInfo', component: MessageInfo },
+        { path: '/messageErr/:id', name: 'messageErr', component: messageErr },
 
         //······················· 用户中心 ·······················
         { path: '/user', name: 'User', component: User,  meta: {footer: true }}, 
