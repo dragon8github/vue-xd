@@ -1,0 +1,207 @@
+@import "./../../sass/variables";
+@import "./../../sass/func";
+.header-bar {
+  font-size: pxToRem(36px);
+  color:#fff;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      height:pxToRem(85px);
+    }
+  }
+}
+
+.masker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.icon-add {  
+  position: fixed;
+  z-index: 9999;
+  width: pxToRem(80px);
+  height: pxToRem(80px);
+  background: url(../../images/add_button.png) no-repeat;
+  right: pxToRem(50px);
+  bottom: pxToRem(180px);
+  background-size: contain;
+  transition: all .3s ease;
+
+  &.hide {
+      transform: translateX(pxToRem(100px)) rotate(360deg);
+      opacity: 0.3; 
+  }
+}
+
+.icon {
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  &.icon-back {
+       display:block;
+       position: absolute;
+       width: pxToRem(90px);
+       height: 100%;
+       top:50%;
+       transform: translateY(-50%);
+       background: url(../../images/back.png) no-repeat;
+       background-size: pxToRem(25px) pxToRem(40px);
+       background-position: center;
+  }
+  &.icon-search {
+    width: pxToRem(100px);
+    height: 100%;
+    right: pxToRem(0px);
+    top:50%;
+    transform: translateY(-50%);
+    background: url(../../images/search.png) no-repeat;
+    background-size: pxToRem(45px);
+    background-position: center;
+  }
+
+  &.icon-append {
+    width: pxToRem(100px);
+    height: 100%;
+    right: pxToRem(0px);
+    top:50%;
+    transform: translateY(-50%);
+    background: url(../../images/add_icon.png) no-repeat;
+    background-size: pxToRem(45px);
+    background-position: center;
+  }
+}
+
+.component-search {
+  .search-block {
+    position: absolute;
+    top: 1.87733rem;
+    left: 0;
+    right: 0;
+    top: pxToRem(86px);
+    background-color: #fff;
+    padding: pxToRem(30px) pxToRem(60px);
+    z-index: 1000;
+  }
+  .input-wrap {
+    display: flex;
+    
+    display: -webkit-box;
+    height: pxToRem(35px * 2);
+    margin-bottom: 0.55467rem;
+    span {
+      font-size: pxToRem(30px);
+      color: #212121;
+      height: 100%;
+      line-height: pxToRem(35px * 2);
+      padding-right: 0.40533rem;
+      display: block;
+    }
+  }
+  .btn-default {
+    width: 100%;
+    border:0;
+    height:pxToRem(68px);
+    line-height: pxToRem(68px);
+    border-radius: 15px;
+    color: #fff;
+    font-size: pxToRem(36px);
+    @include bg();
+  }
+}
+
+.component-search .input-wrap div {
+  flex: 1;
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+  border-radius: 0;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+
+  input {
+    border: 0;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    height: pxToRem(35px * 2);
+    position: relative;
+    font-size: pxToRem(30px);
+    color: #212121;
+    padding-left: 0.42667rem;
+    border: 1px solid #ccc;
+  }
+  select {
+    border: 0;
+    box-shadow: none;
+    background-image: url(./../../images/arrow-down-light.png);
+    background-repeat: no-repeat;
+    background-size: 0.55467rem 0.55467rem;
+    background-position: 95% 50%;
+    background-color: transparent;
+    height: pxToRem(35px * 2);
+    padding-left: 0.42667rem;
+    margin: 0;
+    font-size: pxToRem(30px);
+    border: 1px solid #ccc;
+  }
+}
+
+.component-search .input-wrap div:before,
+.component-search .input-wrap:after,
+.component-search .input-wrap div:before {
+  z-index: 1000;
+}
+
+
+.animated, .slideInUp, .slideOutDown, .fadeIn, .fadeOut, .slideInDown, .slideOutUp {
+  -webkit-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.slideInDown {
+  display: block;
+  animation-name: slideInDown;
+  -webkit-animation-name: slideInDown;
+}
+
+.slideOutUp {
+  -webkit-animation-name: slideOutUp;
+  animation-name: slideOutUp;
+}
+
+@keyframes slideInDown {
+  0% {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutUp {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    visibility: hidden;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+}

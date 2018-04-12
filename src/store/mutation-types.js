@@ -1,0 +1,3 @@
+export const SET_FETCH_COUNT = 'SET_FETCH_COUNT'
+export const SET_USER_INFO = 'SET_USER_INFO'
+

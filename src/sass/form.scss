@@ -1,0 +1,56 @@
+@import "./../../sass/variables";
+@import "./../../sass/func";
+
+.page-field {
+    margin: pxToRem(30px);
+    padding-bottom: pxToRem(100px);
+
+    .mint-cell .mint-cell-wrapper { 
+      padding: 0 !important;
+      width: auto !important;
+      margin:0 pxToRem(30px);
+    }
+
+    .page-part {
+        border-radius: 8px;
+        box-shadow: 5px 5px 30px #ccc;
+        background: #fff;
+    }
+
+    .page-button-group {
+      margin-top:pxToRem(50px);
+      background:url('../../images/BarBusiness_button.png') no-repeat;
+      height:pxToRem(89px);
+      line-height:pxToRem(89px);
+      background-size: 100%;
+      text-align: center;
+      color:#fff;
+      font-size:pxToRem(40px);
+    }
+
+    .page-button-group2 {
+      margin-top:pxToRem(50px);
+      text-align: center;
+      font-size:pxToRem(40px);
+      color:#fff;
+      height:pxToRem(89px);
+      line-height:pxToRem(89px);
+      display:flex;
+      justify-content: space-between;
+
+      & > .sublime {
+          background:url('../../images/BarBusiness_button.png') no-repeat;
+          width:48%;
+          background-size: 100% 100%;
+      }
+
+      & > .cancel {
+          border: 1px solid #2DA5FF;
+          color: #2DA5FF;
+          background-color: transparent;
+          width:48%;
+          border-radius:5px;
+      }
+    }
+}
+

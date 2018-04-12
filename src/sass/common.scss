@@ -1,0 +1,230 @@
+@charset 'utf-8';
+@import "reset";
+@import "func";
+@import "variables";
+@import "sprite";
+
+html, body {
+  font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+  -webkit-tap-highlight-color: none;
+  -webkit-overflow-scrolling: touch !important;
+  background: #eee;
+  user-select: none;
+}
+
+input, textarea,button,select { outline:none; resize:none; }
+
+.header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    @include pxToPx(font-size, 36);
+    color: #FFF;
+    text-align: center;
+    height: pxToRem($header-height);
+    line-height: pxToRem($header-height);
+    z-index:9999;
+    @include bg();
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: pxToRem($header-height - 2px);
+    box-sizing: border-box;
+    &.white {
+        background-color: #fff;
+    }
+}
+
+.sub-title {
+    height: pxToRem(60px);
+    line-height: pxToRem(60px);
+    color: #999;
+    font-size: pxToRem(28px);
+    padding: 0 pxToRem(36px);
+    span {
+      float: right;
+    }
+  }
+
+
+.icon-arrow {
+    position: absolute;
+    right: pxToRem(26px);
+    top: 50%;
+    margin-top: pxToRem(-14px);
+    margin-right: 0 !important;
+}
+
+
+.pop-cont {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-left: pxToRem(-270px);
+  text-align: center;
+  color: #fff;
+  .pop-txt1 {
+    width: 100%;
+    font-size: pxToRem(40px);
+    margin-top: pxToRem(20px);
+  }
+  .icon-coin {
+    margin: auto;
+    font-size: pxToRem(62px);
+    line-height: pxToRem(280px);
+    display: block;
+    position: relative;
+    top: pxToRem(-20px);
+  }
+  .pop-txt2 {
+    font-size: pxToRem(26px);
+    width: 100%;
+    position: relative;
+    top: pxToRem(-70px);
+  }
+  .btn-continue {
+    font-size: pxToRem(32px);
+    width: pxToRem(480px);
+    height: pxToRem(80px);
+    border: 1px solid #fff;
+    border-radius: pxToRem(80px);
+    line-height: pxToRem(80px);
+    margin: auto;
+    background-color: rgba(255, 255, 255, .2);
+    position: relative;
+    top: pxToRem(-50px);
+  }
+}
+
+
+.list {
+    padding-left: pxToRem(36px);
+    background-color: #fff;
+    
+    &>li {
+      height: pxToRem(140px);
+    line-height: pxToRem(140px);
+      font-size: 0;
+      display: -webkit-box;
+        
+        display: flex;
+      * {
+        display: block;
+        box-sizing: border-box;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid #d5d5d5;
+      }
+    }
+    img {
+      width: pxToRem(82px);
+      height: pxToRem(82px);
+      margin: pxToRem(29px) 0;
+    }
+    div {
+      font-size: pxToRem(32px);
+      color: #333;
+      width: pxToRem(326px);
+      padding-left: pxToRem(26px);
+      @include ellipsis();
+    }
+    span {
+      font-size: pxToRem(32px);
+      color: #fb435b;
+      width: pxToRem(270px);
+      @include ellipsis();
+      text-align: right;
+    }
+  }
+
+.page-loadmore-wrapper {
+    // overflow: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+.is-rotate {
+    transform: rotate(180deg) !important;
+}
+.no-header {
+    padding-top: 0 !important;
+}
+
+.invite-avator {
+  width: pxToRem(100px);
+  height: pxToRem(100px);
+  border-radius: pxToRem(100px);
+  border: pxToRem(4px) solid #fff;
+  position: absolute;
+  top: pxToRem(-40px);
+  left: 50%;
+  margin-left: pxToRem(-50px);
+}
+.p-txt1 {
+  height: pxToRem(40px);
+  line-height: pxToRem(40px);
+  font-size: pxToRem(28px);
+  color: #333;
+}
+.p-txt2 {
+  height: pxToRem(34px);
+  line-height: pxToRem(34px);
+  font-size: pxToRem(24px);
+  color: #999;
+  margin-top: pxToRem(16px);
+}
+.invite-qrcode {
+  img {
+    width: pxToRem(260px);
+    height: pxToRem(260px);
+  }
+}
+
+
+/**
+  表格相关的样式。主要运用于订单详情页中的某些场景中
+*/
+.rt { width: 100%; font-size:pxToRem(30px);  line-height: 100%;border-collapse: collapse; border-spacing: 0; }
+.rt th,
+.rt td { margin: 0; padding: pxToRem(30px);vertical-align: top; border: 1px solid #babcbf; background: #fff; height: pxToRem(40px);
+    text-align: center;
+    vertical-align: middle;
+    /*max-width: 300px;*/
+    overflow-wrap: break-word;
+  }
+.rt th {background: #fff2b2;width: pxToRem(180px);    background: #2DA5FF;
+    width: 2.4rem;
+    color: #fff; }
+.rt a {text-decoration: none;}
+#rt { display: block; position: relative;}
+#rt thead { display: block; float: left; }
+#rt tbody { display: -webkit-box; overflow-x: auto; }
+#rt th,
+#rt tr,
+#rt td { display: block; }
+
+
+/**
+  Select相关的演示。主要是为了初始化
+*/
+select, textarea, input[type="text"], input[type=search], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="tel"], input[type="color"], .input-group {
+  width: 100%;
+  padding: 0px;
+  background: #fff;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+
+/* fade相关的动画 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
