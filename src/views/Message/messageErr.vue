@@ -2,40 +2,45 @@
 	<div id="messageErr">
 		<cs-header :header-title="'消息中心'" :has-back="true"></cs-header> 
         <div class="header">
-            <div class="header__title">部分扣款失败提示<a class="header__title--link" @click="go">（TDF1032017112102）</a></div>
-            <div class="header__timer">2018-03-07  08:00</div>
+            <div class="header__title">{{ myData.title }} <a class="header__title--link" v-if="myData.id" @click="go">（{{ myData.id }}）</a> </div>
+            <div class="header__timer">{{ timeYMD(myData.time) }}</div>
         </div> 
         <div class="line"></div>
-        <div class="text">
-            部分扣款失败，具体内容如下：
-            <p class="text__main">
-                尊敬的***先生/女士，您的客户张三，于2017年3月11日借入的35万借款第_期还款部分扣款失败,失败原因【可用余额不足，请联系发卡银行】，请及时联系客户，避免造成逾期。
-            </p>
+        <div class="text"> 
+            <div class="text__title">{{ myData.title }}，具体内容如下：</div>
+            <p class="text__main"> {{ myData.content }} </p> 
         </div>
 	</div>
 </template>
 
 <script>
 import csHeader from 'mycomponents/Header.vue'
+import Toast from 'components/toast/index.js'
 
 export default {
-
   name: 'messageErr',
 	components: {
 	  csHeader
 	},
   data () {
     return {
-    	myData : null
+    	myData : this.$store.state.message
     };
   },
   methods: {
-    go (id) {
-        id && this.$router.push();
+    go () {
+        var type = this.myData.type
+        if (type === '车易贷') {
+            this.$router.push(`/CarBusinessDetails/id/${this.myData.id}`)
+        } else if (type === '房速贷') {
+            this.$router.push(`/houseBusinessDetails/id/${this.myData.id}`)
+        } else {
+            Toast('暂时没有此业务详情')
+        }
     }
   },
   beforeMount () {
-  	
+  	 console.log(this.myData)
   }
 };
 </script>
@@ -80,6 +85,10 @@ export default {
         font-size: pxToRem(28px);
         color: #000000;
         line-height: pxToRem(45px);
+
+        .text__title {
+            margin-bottom: pxToRem(20px);
+        }
 
         .text__main {
             text-indent: pxToRem(40px);

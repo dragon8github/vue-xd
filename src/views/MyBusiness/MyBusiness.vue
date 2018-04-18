@@ -156,6 +156,8 @@ export default {
     },
     // 重置数据
     resetWhere () {
+      this.isEmpty = false
+      this.bottomDisabled = false
        this.where = {
           tag: this.$route.params.tag,    // 标签页[0：待审，1：已审，2：我的业务]
           business_type:'',               // 业务类型

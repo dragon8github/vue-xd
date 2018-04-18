@@ -5,7 +5,7 @@ import ajax from '../handleFetch.js'
  * 获取推送消息列表页(PushNotification_GetAll)
  * 技术开发人员：余飞
  */
-const PushNotification_GetAll = (data) => {
+const PushNotification_GetAll = (data, isQuiet) => {
     return ajax.postData('', {
         "Data": `{
                 "BusinessType":null,
@@ -13,7 +13,7 @@ const PushNotification_GetAll = (data) => {
                 "PageSize":${data.PageSize}
               }`,
         "MethodName": "PushNotification_GetAll"
-    });
+    }, isQuiet);
 }
 
 

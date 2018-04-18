@@ -120,7 +120,7 @@ const router = new Router({
         { path: '/message', name: 'Message', component: Message },
         { path: '/message/:id', name: 'MessageDetails', component: MessageDetails },
         { path: '/MessageInfo/:id', name: 'MessageInfo', component: MessageInfo },
-        { path: '/messageErr/:id', name: 'messageErr', component: messageErr },
+        { path: '/messageErr', name: 'messageErr', component: messageErr },
 
         //······················· 用户中心 ·······················
         { path: '/user', name: 'User', component: User,  meta: {footer: true }}, 

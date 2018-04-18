@@ -112,6 +112,8 @@ export default {
     },
     // 重置数据
     resetWhere () {
+      this.isEmpty = false
+      this.bottomDisabled = false
        // 初始化搜索条件
        this.where = {
           Status: '',

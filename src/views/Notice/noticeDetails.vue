@@ -1,7 +1,7 @@
 <template>
-	<div id="noticeDetails" v-if="myData">
+	<div id="noticeDetails">
 		<cs-header :header-title="'通知中心'" :has-back="true"></cs-header>
-		<panel :Top="false" :Bottom="false">
+		<panel :Top="false" :Bottom="false" v-if="myData">
 			<div slot="body">
 				<div class="notice-top">
 					<p>{{ myData['notice_title'] }}</p>
@@ -24,6 +24,8 @@
 	import csHeader from 'mycomponents/Header.vue'
 	// panel组件
 	import panel from 'mycomponents/common/panel.vue'
+	// Toast 组件
+	import Toast from 'components/toast/index.js'
 
 	export default {
 		name: 'noticeDetails',
@@ -33,15 +35,21 @@
 		},
 		data () {
 			return {
-				myData: null,
+				myData: {},
 				title: "通知详情",
 				files: []
 			};
 		},
-		beforeMount() {
-			this.api.Notice.Notice_Get(this.$route.params.id).then(result => {
-				this.myData = result.Data['Notice']
-				this.files = result.Data.Files;
+		beforeMount () {
+			this.api.Notice.Notice_Get(this.$route.params.id, true).then(result => {
+				if (result.ReturnCode == 1) {
+					this.myData = result.Data['Notice']
+					this.files = result.Data.Files
+				} else {
+					Toast('获取消息详情失败！请稍后重试' + result.ReturnMessage )
+				}
+			}).catch(err => {
+				Toast('获取消息详情失败！请稍后重试' + err.message)
 			})
 		}
 	};
@@ -52,7 +60,7 @@
 	@import "./../../sass/func";
 	#noticeDetails {
 		padding-top: pxToRem(86px);
-		
+		background: #fff;
 		
 		.page-loadmore-wrapper {
 			background: #fff;

@@ -7,6 +7,6 @@
 // 测试 加密版
 // export const API_SERVER = 'http://oatest.bujidele.com:8010/apitest/api/project/dod' 
 
-// 开发版本
+// 测绘版本
 export const API_SERVER = 'http://172.16.200.106:8084/apitest2/api/project/dod'
 

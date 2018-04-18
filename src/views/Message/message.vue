@@ -1,6 +1,6 @@
 <template>
   <div id="message">
-     <cs-header :header-title="'消息中心'" :has-back="true"></cs-header> 
+     <cs-header :header-title="'消息中心'" :has-back="true" :isLoading="isLoading" ></cs-header> 
      <panel :_loadTop = "busilistloadTop" 
             :_loadBottom = "busilistloadBottom" 
             :_isEmpty="isEmpty" 
@@ -10,9 +10,8 @@
                            v-for="(data, index) in myData"
                            :key="index" 
                            :class="{Unread : !data.IsRead}"
-                           :clickMethod="goToDetails(data.TurnUrl, data.MsgContent, data.LogId, data.IsRead, index)"
-                           :label="data.MsgContent"
-                           :label2="data.CreateTime"
+                           :clickMethod="goToDetails(data.TurnUrl, data.MsgContent, data.LogId, data.IsRead, index, data.MsgType, data.MsgTitle, data.CreateTime)"
+                           :label2="timeYMD(data.CreateTime)"
                            :title="data.MsgTitle"
                            is-link>
                      </cell>
@@ -38,7 +37,8 @@ export default {
   name: 'message',
   data () {
     return {
-      myData: null,
+      isLoading: false,    // 是否开启头部Loading菊花图
+      myData: [],
       isEmpty:false,
       bottomDisabled:false,
       where: {
@@ -53,44 +53,54 @@ export default {
     panel
   },
   methods: {
-      // 设置消息为已读(已废弃)
+      resetWhere () {
+        this.isEmpty = false;
+        this.bottomDisabled = false;
+        this.where =  {
+          PageIndex: 1,
+          PageSize: 10
+        }
+      },
+      // 设置消息为已读
       MarkAsReaded (logId, index, cb) {
           this.api.Notification.PushNotification_MarkAsReaded(logId).then(Result => {
                // 静态设置已读
                this.myData[index].IsRead = true
+               // 设置缓存
+               this.$localStorage.set(this.$route.path, JSON.stringify(this.myData))
                // 回调函数
                cb && cb(Result)
           })
       },
       // 进入详情页
-      goToDetails (url, content, logId, isRead, index) {
+      goToDetails (url, content, logId, isRead, index, type, title, time) {
         return  () => {
-          // 如果Url不存在。说明该消息不支持APP阅读和操作
           if (!url) {
-             // 如果url不存在但消息可读。弹出提示
-             if (isRead) {              
-                return Toast('App目前不支持该业务的操作，请在电脑上操作，谢谢')
-
-             // 如果url不存在并且消息不可读
-             } else {
-                // 将该条消息修改为已读标识，然后弹出提示
-                this.MarkAsReaded(logId, index, _ => {
-                    Toast('App目前不支持该业务的操作，请在电脑上操作，谢谢')
-                })
-             }
+             // 获取业务类型
+             var _type = type.substr(0, type.indexOf('-'))
+             // 获取业务编号
+             var _id = title.indexOf('（') >= 0 ? /（(.+)）/.exec(title)[1] : null;
+             // 获取标题
+             var _title = _id ? title.substr(0, title.indexOf('（')) : title;
+             // 将该条消息修改为已读标识，然后跳转到指定页
+             this.MarkAsReaded(logId, index, _ => {
+                 // 设置缓存
+                 this.$store.state.message = { content: content, time: time, type: _type, id: _id, title: _title }
+                 // 跳转到消息详情
+                 this.$router.push('/messageErr')
+             })
           // 如果url正常存在，直接跳转即可
           } else {
-            // 将该条消息修改为已读标识，然后跳转到指定页(已废弃)
-            //this.MarkAsReaded(logId, index, _ => {
-            //    this.$router.push(url)
-            //})
-            this.$router.push(url)
+            // 将该条消息修改为已读标识，然后跳转到指定页
+            this.MarkAsReaded(logId, index, _ => {
+               this.$router.push(url)
+            })
           }
         }
       },
       // 获取数据
-      getData (cb) { 
-          this.api.Notification.PushNotification_GetAll(this.where).then(Result => {
+      getData (cb, Q = false) { 
+          this.api.Notification.PushNotification_GetAll(this.where, Q).then(Result => {
               // 如果有数据，还原正常配置
               if (Result.Data.length > 0) {
                   this.bottomDisabled = false;
@@ -121,14 +131,60 @@ export default {
           })
       }
   },
-  beforeMount () {
-     // 初始化数据
-     this.getData(data => {
-         // 如果首次加载页面时请求数据长度为0，那么展示【没有数据哦~】
-         this.isEmpty = data.length === 0
-         // 替换数组
-         this.myData = data
-     })
+  activated () {
+      let self = this;
+      // 获取缓存数据，如果没有则为null
+      let cache = self.$localStorage.get(self.$route.path)
+
+      // 是否存在缓存数据
+      if (cache) {
+        // 缓存只能存储字符串，所以需要主动转化为object
+        let cacheObject = JSON.parse(cache)
+        // 重置纯净的缓存数据: TODO: 这里渲染数据实在太慢了
+        self.myData = cacheObject;
+        // 重置搜索条件
+        self.resetWhere();
+        // TODO:这个延迟主要是避免太快导致用户没看到有提示.就体验而言挺有必要的。看情况吧
+        setTimeout(() => {
+            // 开启Header-Loading
+            self.isLoading = true;
+            // 读取数据来判断
+            self.getData(data => {
+               // 如果最新的数据为空
+               // 如果原本的数据为空
+               // 如果最新的一条数据和缓存中最新的一条数据对比不一致
+               // 以上情况都会替换数据
+               if (data.length === 0 || self.myData.length === 0 || data[0].LogId != self.myData[0].LogId) {
+                  // 那么替换最新的十条数据
+                  self.myData = data
+                  // 设置缓存
+                  self.$localStorage.set(self.$route.path, JSON.stringify(data))
+                  // 展示空
+                  self.isEmpty = true
+                }
+                // 关闭Header-Loading
+                self.isLoading = false;
+            }, true)
+            // 计时器，如果header-loading超过10秒，那么还原
+            let timer = setInterval(() => {
+             if (this.isLoading && this.LoadingTimer <= 10) {
+               this.LoadingTimer++;
+             } else {
+               this.isLoading = false;
+               clearInterval(timer);
+             }
+           }, 1000)
+        }, 400)
+      } else {
+        self.getData(data => {
+            // 如果首次加载页面时请求数据长度为0，那么展示【没有数据哦~】
+            if (data.length === 0)  self.isEmpty = true
+            // 替换数组
+            self.myData = data
+            // 将最初纯净的数据加入到缓存之中.方便之后处理
+            self.$localStorage.set(self.$route.path, JSON.stringify(data))
+        }) 
+      }
   }
 }
 </script>
@@ -153,6 +209,10 @@ export default {
         color:#999;
         font-size:pxToRem(24px);
     }
+  }
+
+  .mint-cell .mint-cell-label.mint-cell-label2 {
+      text-align: left;
   }
 
   .Unread .mint-cell-text {

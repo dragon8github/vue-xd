@@ -52,16 +52,20 @@
 		},
 		methods: {
 			resetWhere () {
+				this.isEmpty = false
+				this.bottomDisabled = false
 				this.where = {
 					PageIndex: 1,
 					PageSize: 10
 				}
 			},
-			// 设置消息为已读（已废弃）
+			// 设置消息为已读
 			MarkAsReaded(logId, index, cb) {
 				this.api.Notice.Notice_MarkAsReaded(logId).then(Result => {
 					// 静态设置已读
 					this.myData[index].IsRead = true
+					// 设置缓存
+					this.$localStorage.set(this.$route.path, JSON.stringify(this.myData))
 					// 回调函数
 					cb && cb(Result)
 				})
@@ -81,7 +85,11 @@
 			},
 			goToDetails(logId, index) {
 				return () => {
-					this.$router.push(`/notice/${logId}`)
+					// 将该条消息修改为已读标识，然后跳转到指定页
+					this.MarkAsReaded(logId, index, _ => {
+					    // 跳转到消息详情
+						this.$router.push(`/notice/${logId}`)
+					})
 				}
 			},
 			busilistloadTop(cb) {

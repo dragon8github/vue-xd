@@ -6,3 +6,6 @@ export let translateX = 0
 
 // translateY的监听器
 export let translateY = 0
+
+// 消息中心
+export let message = null

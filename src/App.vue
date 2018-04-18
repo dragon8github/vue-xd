@@ -1,7 +1,7 @@
 <template>
    <div id="app">
       <transition :name="transitionName" @afterLeave="clearTransition">
-          <keep-alive include="carBusiness,houseBusiness,QrcodeBusiness,allLedger,AutoRepay,auditAssign,MyBusiness,notice,noticeDetails">
+          <keep-alive include="carBusiness,houseBusiness,QrcodeBusiness,allLedger,AutoRepay,auditAssign,MyBusiness,notice,message">
               <router-view class="view"></router-view>
           </keep-alive> 
       </transition>
@@ -53,18 +53,18 @@ export default {
   @import "sass/variables";
   @import "sass/func";
   .view {
-    width: pxToRem(750px);
-    height: 100vh;
+    position: absolute;
+    height: 100%;
     margin: 0 auto;
     transition: all .3s ease-in-out;
     box-sizing: border-box;
     background-color: $bg;
-    position: absolute;
     left: 0;
     right: 0;
     top: 0;
-    bottom: 0;
     z-index: 1;
+    overflow-y: scroll;
+    // bottom: 0;
   }
 
   // Page Turn on Transian Effect

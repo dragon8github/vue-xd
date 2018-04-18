@@ -1,28 +1,29 @@
 <template>
-	<div id="messageInfo" v-if="myData">
+	<div id="messageInfo">
 		 <cs-header :header-title="'消息中心'" :has-back="true"></cs-header> 
          <div class="header">
-             <div class="header__title">2018年03月07日湛仲院立案上传报告</div>
-             <div class="header__timer">2018-03-07  08:00</div>
+             <div class="header__title">{{ myData.Title }}</div>
+             <div class="header__timer">{{ timeYMD(myData.ReportDate) }}</div>
          </div>
+         
          <div class="ad">该报告由系统每天早上08:00自动生成，如有疑问请联系运维。</div>
          <div class="case">
-                <div class="case__cell is-active"><div class="case__title">立案数量</div> <div class="case__num">386</div></div>
-                <div class="case__cell"><div class="case__title">立案失败</div> <div class="case__num">32</div></div>
-                <div class="case__cell"><div class="case__title">立案成功</div> <div class="case__num">332</div></div>
-                <div class="case__cell"><div class="case__title">处理中</div> <div class="case__num">22</div></div>
+                <div class="case__cell"  @click="active(0)" :class="{'is-active' : index == 0}"><div class="case__title">立案数量</div> <div class="case__num">{{ myData.CaseNumber }}</div></div>
+                <div class="case__cell"  @click="active(1)" :class="{'is-active' : index == 1}"><div class="case__title">立案失败</div> <div class="case__num">{{ myData.FailNumber }}</div></div>
+                <div class="case__cell"  @click="active(2)" :class="{'is-active' : index == 2}"><div class="case__title">立案成功</div> <div class="case__num">{{ myData.Success }}</div></div>
+                <div class="case__cell"  @click="active(3)" :class="{'is-active' : index == 3}"><div class="case__title">处理中</div> <div class="case__num">{{ myData.InHand }}</div></div>
          </div>
         <div class="center">
-             <div class="casecount">立案总金额：<span class="casecount__money">350,000.00元</span></div>
-             <div class="item">
-                <div class="item__img is-fail"></div>
-                <div class="item__id">TDF8272017031701</div>
-                <div class="item__money">出款金额：<span class="item__money--blue">350,000.00</span>元</div>
-                <div class="item__address">(2017)湛仲字第E04085800号</div>
-                <div class="item__time">发送时间： 2015-03-08  23：53</div>
-                <div class="item__time2">出款日期： 2015-03-08</div>
+             <div class="casecount">{{ moneyText }}：<span class="casecount__money">{{ allMoney }} 元</span></div>
+             <div class="item" v-for="item in tmpData">
+                <div class="item__img" :class="getClass(item.status)"></div>
+                <div class="item__id">{{ item.business_id }}</div>
+                <div class="item__money">出款金额：<span class="item__money--blue">{{ item.upload_output_money }}</span> 元</div>
+                <div class="item__address">{{ item.record_number }}</div>
+                <div class="item__time">发送时间： {{ timeYMD(item.send_time) }}</div>
+                <div class="item__time2">出款日期： {{ timeYMD(item.output_date) }}</div>
                 <div class="item__line"></div>
-                <div class="item__remark">备注：处理成功</div>
+                <div class="item__remark">备注：{{ item.remark }}</div>
              </div>
          </div>
 	</div>
@@ -38,13 +39,76 @@ export default {
 	},
   data () {
     return {
-    	myData : null
+    	myData : {},
+        index: 0,
+        moneyText: '立案总金额',
+        allMoney: 0,
+        tmpData: [],
+        allData: [],
+        failData:[],
+        successData: [],
+        doingData: []
     };
+  },
+  methods: {
+    active (index) {
+        this.index = index
+        switch (index) {
+            case 0:
+                this.moneyText = '立案总金额'
+                this.allMoney = this.myData.CaseMoney
+                this.tmpData = this.allData
+                break;
+            case 1:
+                this.moneyText = '立案失败总金额'
+                this.allMoney = this.myData.FailMoney
+                this.tmpData = this.failData
+                break;
+            case 2:
+                this.moneyText = '立案成功总金额'
+                this.allMoney = this.myData.SuccessMoney
+                this.tmpData = this.successData
+                break;
+            case 3:
+                this.moneyText = '立案处理中总金额'
+                this.allMoney = this.myData.InHandMoney
+                this.tmpData = this.doingData
+                break;
+        }
+    },
+    getMoneyText (index) {
+
+    },
+    getClass (status) {
+        if (status == '处理中') {
+            return 'is-doing'
+        } else if (status.indexOf("失败") >= 0 ) {
+            return 'is-fail'
+        } else if (status.indexOf("成功") >= 0) {
+            return 'is-success'
+        }
+    }
   },
   beforeMount () {
      const date = this.$route.params.id;
   	 this.api.Common.CommonApi_GetArbitrationRecordReport(date).then(_=>{
         this.myData = _.Data
+        this.allData = this.tmpData = _.Data.ReportList;
+        this.allMoney = _.Data.CaseMoney
+
+        for (var i = 0; i < this.myData.ReportList.length; i++) {
+            var v = this.myData.ReportList[i]
+            // 立案成功
+            if (v.status_value == '1') {
+                this.successData.push(v)
+            // 立案失败
+            } else if (v.status_value == '2') {
+                this.failData.push(v)
+            // 处理中
+            } else if (v.status_value == '0' || v.status_value == '4') {
+                this.doingData.push(v)
+            }
+        }
      })
   }
 };
@@ -91,14 +155,6 @@ export default {
         background-color: #fff;
     }
 
-        .case:before {
-            @include triangle(bottom, 20px, #fff);
-            content: "";
-            position: absolute;
-            left: pxToRem(80px);
-            bottom: pxToRem(-14px);
-        }
-
         .case__cell {
             color: #999999;
             line-height: pxToRem(45px);
@@ -106,6 +162,15 @@ export default {
 
             &.is-active {
                 color: #2da5ff;
+                position: relative;
+            }
+
+            &.is-active:before {
+                @include triangle(bottom, 20px, #fff);
+                @include xcenter();
+                content: "";
+                position: absolute;
+                bottom: pxToRem(-38px);
             }
         }
 
@@ -135,9 +200,9 @@ export default {
     .item {
         position: relative;
 
-        padding: pxToRem(30px);
+        padding: pxToRem(30px) pxToRem(30px) 0 pxToRem(30px);
         margin-bottom: pxToRem(20px);
-        height: pxToRem(360px);
+        // min-height: pxToRem(360px);
         font-size: pxToRem(24px);
         
         background: #fff;
@@ -163,8 +228,6 @@ export default {
                 background-image: url('~@images/success_icon.png')
             }
         }
-
-       
 
         .item__id {
             font-size: pxToRem(27px);
@@ -197,8 +260,9 @@ export default {
         }
 
         .item__remark {
-            position: absolute;
-            bottom: pxToRem(30px);
+            position: relative;
+            bottom: pxToRem(15px);
+            line-height: pxToRem(45px);
         }
 
 }

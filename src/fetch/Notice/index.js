@@ -20,11 +20,11 @@ const Notice_GetAll = (data, isQuiet = false) => {
  * 查看通知公告详情（Notice_Get）
  * 技术开发人员：余飞
  */
-const Notice_Get = (businessId) => {
+const Notice_Get = (businessId, isQuiet = false) => {
     return ajax.postData('', {
         "Data": `${businessId}`,
         "MethodName": "Notice_Get"
-    });
+    }, isQuiet);
 }
 
 
