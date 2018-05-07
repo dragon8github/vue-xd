@@ -55,12 +55,13 @@ export default {
 
 <style lang="scss" scoped>
 	@import "../sass/variables";
-	@import "../sass/func";
+  @import "../sass/func";
+  
 	.cs-footer{
 		position: fixed;
 		left:0;
 		right:0;
-		bottom:0px;
+		bottom:0;
 		background-color:#fff;		
 		@include pxToPx(font-size,30);
 		color:#444444;
@@ -78,8 +79,16 @@ export default {
 			width:33.33%;
 			border-right:1px solid $border-color;
 		}
-	}
-
+  }
+  
+  @media only screen and (device-width: 375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3) {
+    .cs-footer{
+      bottom:150px !important;
+      .mint-tabbar{
+        padding-bottom:50px !important;
+      }
+    }
+  }
   .footer-icon {
     display:block;
     background-size: contain;

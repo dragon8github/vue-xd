@@ -3,7 +3,7 @@
         <!-- 头部导航 -->
         <header id="bsn_header" class="header-bar bsn-header">
             <i class="icon icon-back" @click="backPath"></i>
-            <h1 v-if="isLoading"><img src="../../images/Spinner.gif">{{ loadingText }}</h1>
+            <h1 v-if="isLoading"><img src="~@images/Spinner.gif">{{ loadingText }}</h1>
             <h1 v-else>{{bsnTitle}}</h1>
             <i v-if="!isHeadAdd" class="icon icon-search" @click="showSearch"></i>
             <i v-else @click="goToAdd" class="icon icon-append"></i>

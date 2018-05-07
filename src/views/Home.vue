@@ -231,66 +231,66 @@
 	/* 消息中心 */
 	
 	.icon-msg {
-		background-image: url(../images/home/icon-msg.png);
+		background-image: url(~@images/home/icon-msg.png);
 	}
 	/* 通知中心 */
 	
 	.icon-notice {
-		background-image: url(../images/home/icon-notice.png);
+		background-image: url(~@images/home/icon-notice.png);
 	}
 	/* 操作指引 */
 	
 	.icon-lead {
-		background-image: url(../images/home/icon-lead.png);
+		background-image: url(~@images/home/icon-lead.png);
 	}
 	/* 扫码业务 */
 	
 	.icon-smyw {
-		background-image: url(../images/home/icon-smyw.png);
+		background-image: url(~@images/home/icon-smyw.png);
 	}
 	/* 房速贷 */
 	
 	.icon-fsd {
-		background-image: url(../images/home/icon-fsd.png);
+		background-image: url(~@images/home/icon-fsd.png);
 	}
 	/* 车易贷 */
 	
 	.icon-cyd {
-		background-image: url(../images/home/icon-cyd.png);
+		background-image: url(~@images/home/icon-cyd.png);
 	}
 	/* 业务审批 */
 	
 	.icon-ywsp {
-		background-image: url(../images/home/icon-ywsp.png);
+		background-image: url(~@images/home/icon-ywsp.png);
 	}
 	/* 应收调整 */
 	
 	.icon-ystz {
-		background-image: url(../images/home/icon-ystz.png);
+		background-image: url(~@images/home/icon-ystz.png);
 	}
 	/* 出款审批 */
 	
 	.icon-cksp {
-		background-image: url(../images/home/icon-cksp.png);
+		background-image: url(~@images/home/icon-cksp.png);
 	}
 	/* 台帐管理 */
 	
 	.icon-tzgl {
-		background-image: url(../images/home/icon-tzgl.png);
+		background-image: url(~@images/home/icon-tzgl.png);
 	}
 	/* 代扣查询 */
 	
 	.icon-dkcx {
-		background-image: url(../images/home/icon-dkcx.png);
+		background-image: url(~@images/home/icon-dkcx.png);
 	}
 	/* 展期审批 */
 	
 	.icon-zqsp {
-		background-image: url(../images/home/icon-zqsp.png);
+		background-image: url(~@images/home/icon-zqsp.png);
 	}
 	/** 房速贷派件管理 **/
 	
 	.icon-pjgl {
-		background-image: url(../images/home/icon-pjgl.png);
+		background-image: url(~@images/home/icon-pjgl.png);
 	}
 </style>

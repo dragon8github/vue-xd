@@ -107,7 +107,7 @@ export default {
         loadmore,
         spinner
     },
-    methods: {        
+    methods: {
         handleTopChange (status) {
             this.topStatus = status;
         },
@@ -190,6 +190,11 @@ export default {
         overflow: scroll;
         background: #eee;
     }
+    @media only screen and (device-width: 375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3) {
+        .page-loadmore-wrapper{
+            margin-top:30px;
+        }
+    }
     .mint-spinner {
         display: inline-block;
         vertical-align: middle;
@@ -230,7 +235,7 @@ export default {
         .emptyDataImg {
             width:pxToRem(250px);
             height:pxToRem(250px);
-            background:url("./../../images/emptyData.png") no-repeat center center / cover;
+            background:url("~@images/emptyData.png") no-repeat center center / cover;
             background-size: cover;
             margin-top:pxToRem(150px);
 
@@ -244,7 +249,7 @@ export default {
         .allLoadImg {
             width:pxToRem(250px);
             height:pxToRem(250px);
-            background:url("./../../images/loading.png") no-repeat center center / cover;
+            background:url("~@images/loading.png") no-repeat center center / cover;
             margin-top:pxToRem(20px);
         }
         .allLoadText {

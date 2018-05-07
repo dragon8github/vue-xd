@@ -8,6 +8,15 @@ var apiRoutes = express.Router();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//设置跨域访问
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
+
 // 获取用户信息API入口
 apiRoutes.post('/', function(req, res) {
     var connection = mysql.createConnection({
@@ -38,16 +47,11 @@ apiRoutes.post('/', function(req, res) {
     });
 });
 
-//设置跨域访问
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    next();
-});
+
 
 app.use('/', apiRoutes);
 
 app.listen('3000', function(err){
+    console.log(err);
     console.log('start');
 });

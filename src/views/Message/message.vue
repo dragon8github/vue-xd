@@ -75,7 +75,9 @@ export default {
       // 进入详情页
       goToDetails (url, content, logId, isRead, index, type, title, time) {
         return  () => {
-          if (!url) {
+          if (!url && !type) {
+            return Toast('App目前不支持该业务的操作，请在电脑上操作，谢谢')
+          } else if (!url) {
              // 获取业务类型
              var _type = type.substr(0, type.indexOf('-'))
              // 获取业务编号

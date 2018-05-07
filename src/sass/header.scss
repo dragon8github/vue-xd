@@ -3,7 +3,6 @@
 .header-bar {
   font-size: pxToRem(36px);
   color:#fff;
-
   h1 {
     display: flex;
     justify-content: center;
@@ -13,7 +12,11 @@
     }
   }
 }
-
+@media only screen and (device-width: 375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3) {
+  .header-bar{
+    padding-top: 30px;
+  }
+}
 .masker {
   position: absolute;
   top: 0;

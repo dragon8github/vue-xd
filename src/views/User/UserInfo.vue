@@ -154,7 +154,7 @@ export default {
       width: pxToRem(20px);
       height: pxToRem(34px);
       display: inline-block;
-      background-image: url('../../images/icon_arrow.png');
+      background-image: url('~@images/icon_arrow.png');
       background-size: cover;
       position: absolute;
       right: pxToRem(38px);
@@ -171,19 +171,19 @@ export default {
       background-repeat: no-repeat;
     }
     .icon-tel {
-      background-image: url('../../images/icon_tel.png');
+      background-image: url('~@images/icon_tel.png');
     }
     .icon-mail {
-      background-image: url('../../images/icon_mail.png');
+      background-image: url('~@images/icon_mail.png');
     }
     .icon-qq {
-      background-image: url('../../images/icon_qq.png');
+      background-image: url('~@images/icon_qq.png');
     }
     .icon-QrCode {
-      background-image: url('../../images/QrCode.png');
+      background-image: url('~@images/QrCode.png');
     }
     .icon-setting {
-      background-image: url('../../images/setting.png');
+      background-image: url('~@images/setting.png');
     }
  }
  .exeit {

@@ -220,3 +220,11 @@ $base-font-size: 75px; //design iphone6: 375px * 2 / 10 = 75px; --design
           border-top: pxToRem($size) solid $color;
     }
 }
+
+@mixin position ($top: auto, $right: auto, $bottom: auto, $left: auto) {
+    position: absolute;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}

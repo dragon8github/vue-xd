@@ -26,35 +26,35 @@
             </tabcontaineritem>
 
 
-            <tabcontaineritem id="tab-container1">
-              <panel ref="pannel1" :_loadTop = "loadTop" :_loadBottom = "loadBottom"   :_isEmpty="tag[1]['isEmpty']" :_bottomDisabled = "tag[1]['bottomDisabled']">
-                  <div slot="body">
-                       <businessitem  
-                       v-for="(item,index) in tag[1]['list']"
-                       :data="item"
-                       :key="index" 
-                       :_index = "index"
-                       :_isCanUndo="item.IsUndoable"  
-                       :_isApproval="false"
-                       :_Canel="canelBusiness">                         
-                       </businessitem>
-                  </div>
-              </panel>
-            </tabcontaineritem>
+              <tabcontaineritem id="tab-container1">
+                <panel ref="pannel1" :_loadTop = "loadTop" :_loadBottom = "loadBottom"   :_isEmpty="tag[1]['isEmpty']" :_bottomDisabled = "tag[1]['bottomDisabled']">
+                    <div slot="body">
+                         <businessitem  
+                         v-for="(item,index) in tag[1]['list']"
+                         :data="item"
+                         :key="index" 
+                         :_index = "index"
+                         :_isCanUndo="item.IsUndoable"  
+                         :_isApproval="false"
+                         :_Canel="canelBusiness">                         
+                         </businessitem>
+                    </div>
+                </panel>
+              </tabcontaineritem>
 
 
-            <tabcontaineritem id="tab-container2">
-              <panel ref="pannel2" :_loadTop = "loadTop" :_loadBottom = "loadBottom"  :_isEmpty="tag[2]['isEmpty']" :_bottomDisabled = "tag[2]['bottomDisabled']">
-                 <div slot="body">
-                      <businessitem 
-                      v-for="(item,index) in tag[2]['list']" 
-                      :data="item"
-                      :key="index" 
-                      :_isBtn="false">                        
-                      </businessitem>
-                  </div>
-              </panel>
-            </tabcontaineritem>
+              <tabcontaineritem id="tab-container2">
+                <panel ref="pannel2" :_loadTop = "loadTop" :_loadBottom = "loadBottom"  :_isEmpty="tag[2]['isEmpty']" :_bottomDisabled = "tag[2]['bottomDisabled']">
+                   <div slot="body">
+                        <businessitem 
+                        v-for="(item,index) in tag[2]['list']" 
+                        :data="item"
+                        :key="index" 
+                        :_isBtn="false">                        
+                        </businessitem>
+                    </div>
+                </panel>
+              </tabcontaineritem>
 
         </tabcontainer>
 
@@ -102,6 +102,7 @@ export default {
   name: 'MyBusiness',
   data () {
     return {
+      path: '/',
       selected: 'tab-container' + this.$route.params.tag,    
       businessType:[],  // 业务类型HTTP数据
       where: {
@@ -208,7 +209,7 @@ export default {
       if (this.$refs[`pannel${this.currTag.index}`].loading === false) {
         this.$refs[`pannel${this.oldTag}`].$el.scrollTop = 0
         return cb && cb()
-      } 
+      }
       // 页面索引++
       this.where.page_index++
       // 开始请求数据
@@ -218,7 +219,7 @@ export default {
         // 累加到数组中
         tag.list.push(...data)
         // 执行回调函数：关闭loading
-        cb && cb()   
+        cb && cb()
       })
     },
     // 撤销操作
@@ -316,6 +317,7 @@ export default {
          // 修改路由
          this.$router.push(`/myBusiness/${this.where.tag}`)
     },
+    // 首次进入页面不会触发，而后切换tag的时候才会触发。
     $route (to, from, next) {
         if (to.path.includes("myBusiness")) {
           this.loadCache();
@@ -323,13 +325,15 @@ export default {
     }
   },
   beforeMount () {
-      this.loadCache();
       // 获取业务列表
       this.api.MyBusiness.MyBusiness_GetSearchConditions().then(Result => {
           for (let [index,v] of Result.Data.BusinessTypes.entries()) {
             this.businessType.push({id : v.Key, text: v.Value})
           }
       })
+  },
+  activated(){
+      this.loadCache();
   },
   // 开发小故事：按照我地图链（/store/modules/siteMap）的概念。你从哪里前进，就会从哪个回来。但总有某些页面例外。比如说，作为底部三大页面（首页、我的业务、我）
   // 如果你是从【我】进入【我的业务】，那么按照地图链的概念你应该还是退回【我】界面。但这显然不太对。给人感觉还是得回到【首页】。于是有了以下代码
@@ -345,6 +349,11 @@ export default {
 @import "./../../sass/variables";
 @import "./../../sass/func"; 
   .mybusinessContainer {
-         padding:pxToRem(86px) 0px pxToRem(186px);
+         padding:pxToRem(86px) 0px pxToRem(86px);
+  }
+  @media only screen and (device-width: 375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3)  {
+    .mint-navbar{
+      margin-top: 30px;
+    }
   }
 </style>

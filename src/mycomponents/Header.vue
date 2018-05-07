@@ -33,7 +33,6 @@ export default {
   .cs-header {
     font-size:pxToRem(36px);
     color:#fff;
-    
     h1 {
       display: flex;
       justify-content: center;
@@ -42,6 +41,12 @@ export default {
         height:pxToRem(85px);
       }
     }
+  }
+
+  @media only screen and (device-width: 375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3) {
+      .cs-header {
+          padding-top: 30px;
+      }
   }
   .icon-back {
           display:block;

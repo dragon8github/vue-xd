@@ -1,6 +1,7 @@
 <template>
-  <div id="addRegister" v-if="model.Model">
-      <bsnheader :headerTitle="'客户还款登记'" :has-back="true"></bsnheader>
+<div>
+    <bsnheader :headerTitle="'客户还款登记'" :has-back="true"></bsnheader>
+    <div id="addRegister" v-if="model.Model">
        <div class="page-field">
         <div class="page-part"  >
           <mt-field label="还款日期 *："  :readonly='true' type="text" @textClick="openPicker" :value = "claimDate | timeYMD"></mt-field>
@@ -31,6 +32,9 @@
     </div>
     <picker ref="picker" type="date" v-model="model.Model.claimDate" @confirm="handleChange"></picker>
   </div>
+</div>
+
+  
 </template>
 
 <script>

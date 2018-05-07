@@ -1,8 +1,8 @@
 <template>
-    <div id="approval" v-if="info">
+    <div id="approval">
         <!-- 头部 -->
-        <bsnheader :headerTitle="info.NextNodeName || '审批业务'" :has-back='true'></bsnheader>
-        <panel :Top="false" :Bottom = "false">
+        <bsnheader :headerTitle="info && info.NextNodeName || '审批业务'" :has-back='true'></bsnheader>
+        <panel :Top="false" :Bottom = "false" v-if="info">
             <!-- 身体 -->
             <div class="page-field" slot="body">
                 <div class="page-part">

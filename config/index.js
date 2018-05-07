@@ -14,8 +14,8 @@ module.exports = {
         '/api': {
            // 测试环境：http://172.16.200.106:8084/apitest2/api/project/doold
            // 子尧的电脑 http://192.168.14.153:8010/api/project/doold/
+           // UAT 环境：120.77.244.26:8082/api/project/doold
            target: 'http://172.16.200.106:8084/apitest2/api/project/doold',
-
            //是否跨域 
            changeOrigin: true, 
            // 重写地址 

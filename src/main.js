@@ -96,9 +96,9 @@ if(process.env.NODE_ENV === 'production') {
 	
 } else {
 	// 开发环境，使用代理地址获取用户信息
-	window.fetch('http://192.168.15.117:3000', {
+	window.fetch('http://192.168.12.193:3000', {
 		headers: {"Content-Type": "application/json"},
-		body: JSON.stringify({userName: 'zhongpeixia'}),
+		body: JSON.stringify({userName: 'admin'}),
 		method: 'POST'
 	}).then(data => {
 		return data.json()
